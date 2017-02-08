@@ -110,19 +110,24 @@ inline namespace v1 {
   // ActionContainer
 
   void ActionContainer::addAction(Action& action) {
-    m_actions.push_back(&action);
+    m_actions[action->getName()] = &action;
   }
 
   void ActionContainer::processEvent(const Event& event) {
-    for (auto action : m_actions) {
-      action->processEvent(event);
+    for (const auto& kv : m_actions) {
+      kv.second->processEvent(event);
     }
   }
 
   void ActionContainer::reset() {
-    for (auto action : m_actions) {
-      action->reset();
+    for (const auto& kv : m_actions) {
+      kv.second->reset();
     }
+  }
+  
+  Action* ActionContainer::getAction(const std::string name) {
+    auto action = m_actions.find(name);
+    return (action == m_actions->end())? nullptr : action->second;
   }
 
 }

@@ -245,9 +245,18 @@ inline namespace v1 {
      * @sa Action::reset()
      */
     void reset();
+    
+    /**
+     * @brief Return the action with the given name.
+     * 
+     * @param name the name of the action to return.
+     * 
+     * @return the action with the given name or nullptr.
+     */
+    Action* getAction(const std::string name);
 
   private:
-    std::vector<Action*> m_actions;
+    std::map<std::string,Action*> m_actions;
   };
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
